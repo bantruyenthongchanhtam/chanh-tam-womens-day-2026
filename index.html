@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nàng thơ Chánh Tâm - 8/3</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS for layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary-dark: #1a1a2e;
+            --accent-gold: #d4af37;
+            --soft-pink: #ffb6c1;
+            --lotus-pink: #f687b3;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--primary-dark);
+            color: white;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- Transitions --- */
+        .step {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 1.5s ease forwards;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .step.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Custom Components --- */
+        .candle-container {
+            position: relative;
+            width: 60px;
+            height: 100px;
+        }
+
+        .flame {
+            width: 20px;
+            height: 35px;
+            background: linear-gradient(to bottom, #fff, #ffae00, #ff4500);
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -30px;
+            left: 20px;
+            box-shadow: 0 0 20px #ffae00;
+            animation: flicker 0.1s infinite alternate;
+            opacity: 0.3;
+        }
+
+        .candle-bright .flame {
+            opacity: 1;
+            box-shadow: 0 0 40px #ffae00, 0 0 80px #ffae00;
+            transform: scale(1.2);
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-1deg); }
+            100% { transform: scale(1.1) rotate(1deg); }
+        }
+
+        .candle-stick {
+            width: 30px;
+            height: 80px;
+            background: #eee;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+        }
+
+        /* --- Button Style --- */
+        .btn-custom {
+            background: linear-gradient(135deg, #f687b3, #b83280);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 999px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(184, 50, 128, 0.4);
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .btn-custom:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(184, 50, 128, 0.6);
+        }
+
+        /* --- Door Animation --- */
+        .door-wrapper {
+            width: 200px;
+            height: 280px;
+            perspective: 1000px;
+            margin: 20px auto;
+        }
+
+        .door {
+            width: 100%;
+            height: 100%;
+            background: #5d4037;
+            border: 4px solid #3e2723;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            transform-origin: left;
+            transition: transform 1.5s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .door-open {
+            transform: rotateY(-110deg);
+        }
+
+        .door::after {
+            content: '';
+            position: absolute;
+            right: 20px;
+            width: 15px;
+            height: 15px;
+            background: gold;
+            border-radius: 50%;
+        }
+
+        /* --- Floating Objects Animation --- */
+        .floating-obj {
+            position: absolute;
+            pointer-events: none;
+            z-index: 5;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { 
+                transform: translateY(110vh) translateX(0) rotate(0deg); 
+                opacity: 0; 
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { 
+                transform: translateY(-20vh) translateX(100px) rotate(360deg); 
+                opacity: 0; 
+            }
+        }
+
+        /* --- Gift Box --- */
+        .gift-box {
+            font-size: 80px;
+            cursor: pointer;
+            animation: shake 2s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0); }
+            10%, 30%, 50%, 70%, 90% { transform: rotate(-10deg); }
+            20%, 40%, 60%, 80% { transform: rotate(10deg); }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: red;
+            animation: fall 3s linear forwards;
+        }
+
+        .bg-gradient-pink {
+            background: linear-gradient(to bottom, #1a1a2e, #2d1b33);
+        }
+
+        .special-name {
+            font-family: 'Dancing Script', cursive;
+            color: var(--soft-pink);
+            font-size: 2.5rem;
+            margin: 10px 0;
+            text-shadow: 0 0 10px rgba(255,182,193,0.5);
+        }
+    </style>
+</head>
+<body class="bg-gradient-pink">
+
+    <!-- Audio Element -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="./assets/music/LA_CON_GAI_THAT_TUYET.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- BƯỚC 1: MÀN HÌNH TĨNH -->
+    <div id="step1" class="step active">
+        <div class="candle-container mb-8">
+            <div id="flame" class="flame"></div>
+            <div class="candle-stick"></div>
+        </div>
+        <p class="text-xl italic text-gray-400 mb-6 opacity-80" id="intro-text">
+            Có một điều rất đặc biệt sắp được bật mí...
+        </p>
+        <button onclick="igniteCandle()" class="btn-custom">👉 Thắp nến lên. Lẹ cái tayyy ✨</button>
+    </div>
+
+    <!-- BƯỚC 2: MỞ CỬA BÍ MẬT -->
+    <div id="step2" class="step">
+        <h2 class="text-2xl font-semibold mb-4">Hôm nay là một ngày siêu siêu đặc biệt...</h2>
+        <p class="text-lg text-gray-300 mb-8">Nhưng đặc biệt vì điều chi hè?</p>
+        <div class="door-wrapper">
+            <div id="door" class="door">
+                <span class="text-4xl">🚪</span>
+            </div>
+        </div>
+        <button onclick="openDoor()" class="btn-custom">👉 Mở cửa đi bạn ơiii 🚪</button>
+    </div>
+
+    <!-- BƯỚC 3: TIẾT LỘ NGÀY 8/3 -->
+    <div id="step3" class="step">
+        <h1 class="text-6xl font-bold text-pink-400 mb-4">🎉 08 / 03 🎉</h1>
+        <p class="text-2xl font-medium mb-6">Ngày của những bông hoa xinh đẹp nhất Chánh Tâm!</p>
+        <div class="bg-white/10 p-6 rounded-lg backdrop-blur-md">
+            <p class="text-lg italic">
+                Ai bảo đi chùa là không được nhận quà? <br>
+                Hôm nay phải nhận gấp đôi mới đúng 😌
+            </p>
+        </div>
+        <button onclick="goToStep(4)" class="btn-custom">👉 Quà mô roài? 🎁</button>
+    </div>
+
+    <!-- BƯỚC 4: HỘP QUÀ BẤT NGỜ -->
+    <div id="step4" class="step">
+        <div class="gift-box" id="gift">🎁</div>
+        <p class="text-orange-300 mt-6 font-semibold">Cảnh báo: Mở quà có thể khiến bạn mỉm cười cả ngày mà không ngậm được mồm đóoo 😆</p>
+        <div id="quote-container" class="mt-8 h-20 flex items-center justify-center">
+            <p id="gift-quote" class="text-xl font-medium italic text-pink-200"></p>
+        </div>
+        <button id="gift-btn" onclick="openGift()" class="btn-custom">👉 Mở quà ngay!</button>
+        <button id="next-gift-btn" onclick="goToStep(5)" class="btn-custom hidden">👉 Còn nữa không? 👀</button>
+    </div>
+
+    <!-- BƯỚC 5: LỜI NHẮN RIÊNG -->
+    <div id="step5" class="step">
+        <div class="max-w-md space-y-4 text-lg">
+            <p class="opacity-0 animate-[fadeIn_1s_ease_forwards]">Trong lớp mình,</p>
+            <p class="opacity-0 animate-[fadeIn_1s_ease_1s_forwards]">Có người luôn âm thầm chuẩn bị,</p>
+            <p class="opacity-0 animate-[fadeIn_1s_ease_2s_forwards]">Có người hay cười lớn nhất lớp "a hê hê hê",</p>
+            <p class="opacity-0 animate-[fadeIn_1s_ease_3s_forwards]">Có người lặng lẽ nhưng ấm áp vô cùng…</p>
+            <div class="pt-6 opacity-0 animate-[fadeIn_1s_ease_5s_forwards]">
+                <p class="text-xl font-bold text-pink-300">Nhưng hôm nay...</p>
+                <p class="text-2xl italic">Tất cả đều là “nhân vật chính”.</p>
+            </div>
+        </div>
+        <button onclick="goToStep(6)" class="btn-custom opacity-0 animate-[fadeIn_1s_ease_6s_forwards]">👉 Xem điều đặc biệt nhất 🌺</button>
+    </div>
+
+    <!-- BƯỚC 6: BẤT NGỜ - TÊN TỪNG CHỊ EM -->
+    <div id="step6" class="step">
+        <p class="text-xl mb-2">Gửi đến chị em thương mến- những người đang ngồi trước màn hình này 💛</p>
+        <div id="user-name-display" class="special-name">Nàng Thơ Chánh Tâm</div>
+        
+        <div class="max-w-lg mt-8 space-y-4 text-gray-200">
+            <p>Cảm ơn chị em vì đã hiện diện và có mặt trong hành trình Chánh Tâm.</p>
+            <p>Cảm ơn những nụ cười, những cử chỉ nhẹ nhàng,</p>
+            <p>những lần cùng nhau trưởng thành.</p>
+        </div>
+        <button onclick="goToStep(7)" class="btn-custom">👉 Lời chúc cuối cùng 🌷</button>
+    </div>
+
+    <!-- BƯỚC 7: LỜI CHÚC KẾT -->
+    <div id="step7" class="step">
+        <div class="max-w-2xl">
+            <p class="text-2xl mb-4 font-semibold text-pink-300">Chúc chị em Chánh Tâm</p>
+            <div id="final-typing" class="text-xl leading-relaxed space-y-2">
+                <!-- Sẽ được điền bằng JS typing effect -->
+            </div>
+            <h2 id="final-wish" class="text-4xl font-bold mt-12 text-white opacity-0 transition-opacity duration-1000" style="font-family: 'Dancing Script', cursive;">
+                🌸 Chúc mừng 08/03 🌸<br>
+                <span class="text-2xl font-normal">Mãi là những đóa hoa an nhiên giữa đời.</span>
+            </h2>
+        </div>
+        <button onclick="resetApp()" class="btn-custom mt-12">👉 Xem lời yêu thương thêm lần nữa 💖</button>
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const bgMusic = document.getElementById('bgMusic');
+
+        // Hàm phát nhạc nền
+        function playBackgroundMusic() {
+            if (bgMusic) {
+                bgMusic.volume = 0.4; // Đặt âm lượng vừa phải
+                bgMusic.play().catch(error => {
+                    console.log("Auto-play blocked, wait for next interaction", error);
+                });
+            }
+        }
+
+        function playTone(freq, duration, type = 'sine', volume = 0.1) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function playBell() {
+            playTone(440, 3, 'sine', 0.1);
+            setTimeout(() => playTone(554, 3, 'sine', 0.05), 200);
+        }
+
+        function playMagic() {
+            for(let i=0; i<5; i++) {
+                setTimeout(() => playTone(800 + (i*100), 0.5, 'triangle', 0.05), i * 100);
+            }
+        }
+
+        function goToStep(stepNumber) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + stepNumber).classList.add('active');
+            
+            if(stepNumber === 7) {
+                startFinalTyping();
+            }
+        }
+
+        function igniteCandle() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            document.getElementById('flame').parentElement.classList.add('candle-bright');
+            playBell();
+            setTimeout(() => {
+                goToStep(2);
+            }, 1500);
+        }
+
+        function openDoor() {
+            document.getElementById('door').classList.add('door-open');
+            playMagic();
+            
+            // Phát nhạc ngay khi tương tác mở cửa
+            playBackgroundMusic();
+            
+            // Bắt đầu hiệu ứng bay lơ lửng (Hoa, Tim, Sao, Bong bóng)
+            startFloatingEffects();
+            
+            setTimeout(() => {
+                goToStep(3);
+            }, 1800);
+        }
+
+        const quotes = [
+            "Chị em Chánh Tâm xinh đẹp không phải do makeup... mà do tâm sáng ✨",
+            "Đi chùa tu học nhưng vẫn là nữ chính của cuộc đời mình 😌",
+            "Ai nói hiền là không 'ngầu'?",
+            "Nụ cười của chị em chính là điều tuyệt vời nhất hôm nay 🙏",
+            "Thân khỏe, tâm an, đời tươi tắn. Chúc chị em nhà mình luôn như vậy nhóoo!"
+        ];
+        let quoteIndex = 0;
+
+        function openGift() {
+            const gift = document.getElementById('gift');
+            const quoteDisplay = document.getElementById('gift-quote');
+            
+            gift.style.animation = "none";
+            void gift.offsetWidth;
+            gift.style.animation = "shake 0.5s ease-in-out";
+            
+            createConfetti();
+            playMagic();
+
+            quoteDisplay.innerText = quotes[quoteIndex];
+            quoteIndex++;
+
+            if (quoteIndex >= 3) {
+                document.getElementById('gift-btn').classList.add('hidden');
+                document.getElementById('next-gift-btn').classList.remove('hidden');
+            }
+        }
+
+        function startFinalTyping() {
+            const lines = [
+                "luôn dịu dàng nhưng không yếu đuối,",
+                "luôn mạnh mẽ nhưng không khô khan,",
+                "luôn yêu thương nhưng không quên yêu chính mình."
+            ];
+            const container = document.getElementById('final-typing');
+            container.innerHTML = "";
+            
+            let lineIdx = 0;
+            function typeLine() {
+                if (lineIdx < lines.length) {
+                    let p = document.createElement('p');
+                    p.className = "opacity-0 transition-opacity duration-1000";
+                    p.innerText = lines[lineIdx];
+                    container.appendChild(p);
+                    setTimeout(() => {
+                        p.classList.remove('opacity-0');
+                    }, 100);
+                    
+                    lineIdx++;
+                    setTimeout(typeLine, 1500);
+                } else {
+                    setTimeout(() => {
+                        document.getElementById('final-wish').classList.remove('opacity-0');
+                    }, 1000);
+                }
+            }
+            typeLine();
+        }
+
+        // --- Hiệu ứng Bay lơ lửng (Trái tim, Ngôi sao, Hoa, Bong bóng) ---
+        function startFloatingEffects() {
+            setInterval(() => {
+                // Thêm icon bong bóng vào danh sách
+                const emojis = ['🌸', '🌷', '🌺', '❤️', '💖', '✨', '⭐', '🎈', '🫧', '🎈'];
+                const obj = document.createElement('div');
+                obj.className = 'floating-obj';
+                obj.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                
+                // Vị trí ngang ngẫu nhiên
+                obj.style.left = Math.random() * 100 + 'vw';
+                // Kích thước ngẫu nhiên
+                obj.style.fontSize = (Math.random() * 30 + 15) + 'px';
+                // Tốc độ bay
+                const duration = Math.random() * 5 + 5;
+                obj.style.animationDuration = duration + 's';
+                
+                document.body.appendChild(obj);
+                
+                setTimeout(() => obj.remove(), duration * 1000);
+            }, 400); // Tần suất xuất hiện
+        }
+
+        function createConfetti() {
+            for(let i=0; i<30; i++) {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.style.left = '50%';
+                c.style.top = '40%';
+                c.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                const destX = (Math.random() - 0.5) * 600;
+                const destY = (Math.random() - 0.5) * 600;
+                c.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${destX}px, ${destY}px) scale(0)`, opacity: 0 }
+                ], { duration: 1500, easing: 'ease-out' });
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 1500);
+            }
+        }
+
+        function resetApp() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>
