@@ -200,7 +200,7 @@
         .special-name {
             font-family: 'Dancing Script', cursive;
             color: var(--soft-pink);
-            font-size: 2.5rem;
+            font-size: 4rem;
             margin: 10px 0;
             text-shadow: 0 0 10px rgba(255,182,193,0.5);
         }
@@ -247,7 +247,7 @@
                 Hôm nay phải nhận gấp đôi mới đúng 😌
             </p>
         </div>
-        <button onclick="goToStep(4)" class="btn-custom">👉 Quà mô roài? 🎁</button>
+        <button onclick="goToStep(4)" class="btn-custom">👉 Quà mô roài??? 🎁</button>
     </div>
 
     <!-- BƯỚC 4: HỘP QUÀ BẤT NGỜ -->
@@ -257,20 +257,20 @@
         <div id="quote-container" class="mt-8 h-20 flex items-center justify-center">
             <p id="gift-quote" class="text-xl font-medium italic text-pink-200"></p>
         </div>
-        <button id="gift-btn" onclick="openGift()" class="btn-custom">👉 Mở quà ngay!</button>
-        <button id="next-gift-btn" onclick="goToStep(5)" class="btn-custom hidden">👉 Còn nữa không? 👀</button>
+        <button id="gift-btn" onclick="openGift()" class="btn-custom">👉 Mở liền đi đừng sợ</button>
+        <button id="next-gift-btn" onclick="goToStep(5)" class="btn-custom hidden">👉 Còn cái chi nữa không? 👀</button>
     </div>
 
     <!-- BƯỚC 5: LỜI NHẮN RIÊNG -->
     <div id="step5" class="step">
         <div class="max-w-md space-y-4 text-lg">
             <p class="opacity-0 animate-[fadeIn_1s_ease_forwards]">Trong lớp mình,</p>
-            <p class="opacity-0 animate-[fadeIn_1s_ease_1s_forwards]">Có người luôn âm thầm chuẩn bị,</p>
+            <p class="opacity-0 animate-[fadeIn_1s_ease_1s_forwards]">Có người luôn âm thầm chuẩn bị mọi thứ thật chu đáo,</p>
             <p class="opacity-0 animate-[fadeIn_1s_ease_2s_forwards]">Có người hay cười lớn nhất lớp "a hê hê hê",</p>
-            <p class="opacity-0 animate-[fadeIn_1s_ease_3s_forwards]">Có người lặng lẽ nhưng ấm áp vô cùng…</p>
+            <p class="opacity-0 animate-[fadeIn_1s_ease_3s_forwards]">Có người ít nói, lặng lẽ nhưng ấm áp vô cùng...</p>
             <div class="pt-6 opacity-0 animate-[fadeIn_1s_ease_5s_forwards]">
                 <p class="text-xl font-bold text-pink-300">Nhưng hôm nay...</p>
-                <p class="text-2xl italic">Tất cả đều là “nhân vật chính”.</p>
+                <p class="text-2xl italic">Tất cả đều là "NHÂN VẬT CHÍNH".</p>
             </div>
         </div>
         <button onclick="goToStep(6)" class="btn-custom opacity-0 animate-[fadeIn_1s_ease_6s_forwards]">👉 Xem điều đặc biệt nhất 🌺</button>
@@ -278,13 +278,13 @@
 
     <!-- BƯỚC 6: BẤT NGỜ - TÊN TỪNG CHỊ EM -->
     <div id="step6" class="step">
-        <p class="text-xl mb-2">Gửi đến chị em thương mến- những người đang ngồi trước màn hình này 💛</p>
+        <p class="text-xl mb-2">Gửi đến chị em thương - những người đang ngồi trước màn hình này 💛</p>
         <div id="user-name-display" class="special-name">Nàng Thơ Chánh Tâm</div>
         
         <div class="max-w-lg mt-8 space-y-4 text-gray-200">
-            <p>Cảm ơn chị em vì đã hiện diện và có mặt trong hành trình Chánh Tâm.</p>
-            <p>Cảm ơn những nụ cười, những cử chỉ nhẹ nhàng,</p>
-            <p>những lần cùng nhau trưởng thành.</p>
+            <p>Cảm ơn chị em vì hiện diện, đã đến, đã ở lại và cùng nhau đi qua những chặng đường của Chánh Tâm.</p>
+            <p>Cảm ơn những nụ cười hiền, những ánh mắt ấm áp, những quan tâm dù nhỏ bé nhưng đủ làm lòng người dịu lại.</p>
+            <p>Cảm ơn vì đã cùng nhau lớn lên, cùng nhau học cách hiểu, thương và bao dung hơn mỗi ngày!</p>
         </div>
         <button onclick="goToStep(7)" class="btn-custom">👉 Lời chúc cuối cùng 🌷</button>
     </div>
@@ -409,7 +409,7 @@
             const lines = [
                 "luôn dịu dàng nhưng không yếu đuối,",
                 "luôn mạnh mẽ nhưng không khô khan,",
-                "luôn yêu thương nhưng không quên yêu chính mình."
+                "luôn yêu và được yêu bằng cả trái tim ❤️"
             ];
             const container = document.getElementById('final-typing');
             container.innerHTML = "";
